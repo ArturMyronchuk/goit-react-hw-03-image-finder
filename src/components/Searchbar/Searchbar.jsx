@@ -37,7 +37,7 @@ export class Searchbar extends Component {
     }
 
     this.props.onSubmit(searchQuery);
-    this.setState({ searchQuery, lastQuery: searchQuery }); // Оновлюємо останній успішний запит
+    this.setState({ searchQuery, lastQuery: searchQuery });
   };
 
   render() {
