@@ -11,22 +11,33 @@ export class Searchbar extends Component {
 
   state = {
     searchQuery: '',
+    lastQuery: '',
   };
   handleChangeInput = e => {
     const searchQuery = e.target.value;
-
-    this.setState({ searchQuery: searchQuery });
+    this.setState({ searchQuery });
   };
 
   onHandleSubmit = event => {
     event.preventDefault();
-    if (this.state.searchQuery.trim() === '') {
+    const { searchQuery, lastQuery } = this.state;
+
+    if (searchQuery.trim() === '') {
       Notiflix.Report.info('Please!', 'Enter your search query!', 'Ok');
       return;
-    } else {
-      this.props.onSubmit(this.state.searchQuery);
-      this.setState({ searchQuery: '' });
     }
+
+    if (searchQuery === lastQuery) {
+      Notiflix.Report.info(
+        'Same query!',
+        'Please enter a different search query!',
+        'Ok'
+      );
+      return;
+    }
+
+    this.props.onSubmit(searchQuery);
+    this.setState({ searchQuery, lastQuery: searchQuery }); // Оновлюємо останній успішний запит
   };
 
   render() {
